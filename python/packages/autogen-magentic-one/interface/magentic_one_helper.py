@@ -104,7 +104,7 @@ class MagenticOneHelper:
         await actual_surfer.init(
             model_client=client,
             downloads_folder=os.getcwd(),
-            start_page="https://www.bing.com",
+            start_page="http://192.168.1.10:8888",
             browser_channel="chromium",
             headless=True,
             debug_dir=self.logs_dir,

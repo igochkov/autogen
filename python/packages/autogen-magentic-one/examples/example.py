@@ -16,7 +16,12 @@ from autogen_magentic_one.agents.multimodal_web_surfer import MultimodalWebSurfe
 from autogen_magentic_one.agents.orchestrator import LedgerOrchestrator
 from autogen_magentic_one.agents.user_proxy import UserProxy
 from autogen_magentic_one.messages import RequestReplyMessage
-from autogen_magentic_one.utils import LogHandler, create_completion_client_from_env
+from autogen_magentic_one.utils import (
+    ENVIRON_KEY_CHAT_COMPLETION_KWARGS_JSON,
+    ENVIRON_KEY_CHAT_COMPLETION_PROVIDER,
+    create_completion_client_from_env,
+    LogHandler
+)
 
 # NOTE: Don't forget to 'playwright install --with-deps chromium'
 
@@ -33,8 +38,19 @@ async def main(logs_dir: str, hil_mode: bool, save_screenshots: bool) -> None:
     # Create the runtime.
     runtime = SingleThreadedAgentRuntime()
 
+    env = {
+        ENVIRON_KEY_CHAT_COMPLETION_PROVIDER: "openai",
+        ENVIRON_KEY_CHAT_COMPLETION_KWARGS_JSON: """
+        {
+            "base_url": "http://192.168.1.10:11434/v1",
+            "model": "qwen2.5-coder:14b",
+            "api_key": "ollama"   
+        }
+        """
+    }
+
     # Create an appropriate client
-    client = create_completion_client_from_env(model="gpt-4o")
+    client = create_completion_client_from_env(env=env)
 
     async with DockerCommandLineCodeExecutor(work_dir=logs_dir) as code_executor:
         # Register agents.
@@ -85,7 +101,7 @@ async def main(logs_dir: str, hil_mode: bool, save_screenshots: bool) -> None:
         await actual_surfer.init(
             model_client=client,
             downloads_folder=logs_dir,
-            start_page="https://www.bing.com",
+            start_page="http://192.168.1.10:8888",
             browser_channel="chromium",
             headless=True,
             debug_dir=logs_dir,

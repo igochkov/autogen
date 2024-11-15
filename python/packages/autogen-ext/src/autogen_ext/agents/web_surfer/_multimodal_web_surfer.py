@@ -79,7 +79,7 @@ class MultimodalWebSurfer(BaseChatAgent):
 
     DEFAULT_DESCRIPTION = "A helpful assistant with access to a web browser. Ask them to perform web searches, open pages, and interact with content (e.g., clicking links, scrolling the viewport, etc., filling in form fields, etc.) It can also summarize the entire page, or answer questions based on the content of the page. It can also be asked to sleep and wait for pages to load, in cases where the pages seem to be taking a while to load."
 
-    DEFAULT_START_PAGE = "https://www.bing.com/"
+    DEFAULT_START_PAGE = "http://192.168.1.10:8888/"
 
     def __init__(
         self,
@@ -348,7 +348,7 @@ class MultimodalWebSurfer(BaseChatAgent):
             # If the argument contains a space, treat it as a search query
             elif " " in url:
                 reset_prior_metadata, reset_last_download = await self._playwright_controller.visit_page(
-                    self._page, f"https://www.bing.com/search?q={quote_plus(url)}&FORM=QBLH"
+                    self._page, f"http://192.168.1.10:8888/search?q={quote_plus(url)}&FORM=QBLH"
                 )
             # Otherwise, prefix with https://
             else:
@@ -367,7 +367,7 @@ class MultimodalWebSurfer(BaseChatAgent):
             query = args.get("query")
             action_description = f"I typed '{query}' into the browser search bar."
             reset_prior_metadata, reset_last_download = await self._playwright_controller.visit_page(
-                self._page, f"https://www.bing.com/search?q={quote_plus(query)}&FORM=QBLH"
+                self._page, f"http://192.168.1.10:8888/search?q={quote_plus(query)}&FORM=QBLH"
             )
             if reset_last_download and self._last_download is not None:
                 self._last_download = None

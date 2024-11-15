@@ -86,6 +86,21 @@ _MODEL_CAPABILITIES: Dict[str, ModelCapabilities] = {
         "function_calling": True,
         "json_output": True,
     },
+    "llama3.2:latest": {
+        "vision": True,
+        "function_calling": True,
+        "json_output": True,
+    },
+    "gemma2:latest": {
+        "vision": False,
+        "function_calling": True,
+        "json_output": True,
+    },
+    "qwen2.5-coder:14b": {
+        "vision": True,
+        "function_calling": True,
+        "json_output": True,
+    },
 }
 
 _MODEL_TOKEN_LIMITS: Dict[str, int] = {

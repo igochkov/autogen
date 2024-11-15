@@ -80,7 +80,7 @@ class MultimodalWebSurfer(BaseWorker):
 
     DEFAULT_DESCRIPTION = "A helpful assistant with access to a web browser. Ask them to perform web searches, open pages, and interact with content (e.g., clicking links, scrolling the viewport, etc., filling in form fields, etc.) It can also summarize the entire page, or answer questions based on the content of the page. It can also be asked to sleep and wait for pages to load, in cases where the pages seem to be taking a while to load."
 
-    DEFAULT_START_PAGE = "https://www.bing.com/"
+    DEFAULT_START_PAGE = "http://192.168.1.10:8888/"
 
     def __init__(
         self,
@@ -317,7 +317,7 @@ class MultimodalWebSurfer(BaseWorker):
                 await self._visit_page(url)
             # If the argument contains a space, treat it as a search query
             elif " " in url:
-                await self._visit_page(f"https://www.bing.com/search?q={quote_plus(url)}&FORM=QBLH")
+                await self._visit_page(f"http://192.168.1.10:8888/search?q={quote_plus(url)}&FORM=QBLH")
             # Otherwise, prefix with https://
             else:
                 await self._visit_page("https://" + url)
@@ -329,7 +329,7 @@ class MultimodalWebSurfer(BaseWorker):
         elif name == "web_search":
             query = args.get("query")
             action_description = f"I typed '{query}' into the browser search bar."
-            await self._visit_page(f"https://www.bing.com/search?q={quote_plus(query)}&FORM=QBLH")
+            await self._visit_page(f"http://192.168.1.10:8888/search?q={quote_plus(query)}&FORM=QBLH")
 
         elif name == "page_up":
             action_description = "I scrolled up one page in the browser."
@@ -506,7 +506,7 @@ class MultimodalWebSurfer(BaseWorker):
         ]
 
         # Can we reach Bing to search?
-        # if self._navigation_allow_list("https://www.bing.com/"):
+        # if self._navigation_allow_list("http://192.168.1.10:8888/"):
         tools.append(TOOL_WEB_SEARCH)
 
         # We can scroll up

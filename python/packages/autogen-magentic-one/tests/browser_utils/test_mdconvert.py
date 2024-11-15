@@ -72,7 +72,7 @@ WIKIPEDIA_TEST_EXCLUDES = [
     "move to sidebar",
 ]
 
-SERP_TEST_URL = "https://www.bing.com/search?q=microsoft+wikipedia"
+SERP_TEST_URL = "http://192.168.1.10:8888/search?q=microsoft+wikipedia"
 SERP_TEST_STRINGS = [
     "](https://en.wikipedia.org/wiki/Microsoft",
     "Microsoft Corporation is **an American multinational corporation and technology company headquartered** in Redmond",
